@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيد مبارك - Eid Mubarak</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rubik', sans-serif;
+    background-image: url(https://raw.githubusercontent.com/imagesloads/images/refs/heads/main/img_68c39955bfea85a7.jpg);
+    height: 100vh;
+    overflow: hidden;
+    transition: background-color 2s ease;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sun {
+    position: absolute;
+    top: -120px;
+    width: 100px;
+    height: 100px;
+    background-color: #f2d600;
+    border-radius: 50%;
+    box-shadow: 0 0 20px 10px rgba(242, 214, 0, 0.7);
+    transition: top 2s ease, box-shadow 2s ease;
+    z-index: 10;
+}
+
+.stars-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 2s ease-in-out;
+    z-index: 5;
+}
+
+.star {
+    position: absolute;
+    background-color: rgb(217, 255, 0);
+    border-radius: 0%;
+    animation: twinkle 5s infinite alternate;
+}
+
+
+
+.decoration {
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    top: 0;
+    opacity: 0;
+    transition: opacity 2s ease;
+    z-index: 5;
+}
+
+.left-decoration {
+    left: 0;
+    background: url('left-decoration.png') repeat-y;
+    background-size: contain;
+}
+
+.right-decoration {
+    right: 0;
+    background: url('right-decoration.png') repeat-y;
+    background-size: contain;
+}
+
+.eid-button {
+    display: inline-block;
+    background-color: #f2d600;
+    color: #000000;
+    font-size: 24px;
+    padding: 12px 24px;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 20px 0 rgba(242, 214, 0, 0.7);
+    position: relative;
+    margin-top: -80px;
+    z-index: 20;
+    transition: all 0.5s ease-in-out;
+}
+
+.eid-button:hover {
+    background-color: #f3f2e7;
+    transform: scale(1.1);
+}
+
+.message {
+    position: relative;
+    margin-top: -700px;
+    text-align: center;
+    color: white;
+    top: 270px; 
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px 20px;
+    border-radius: 15px;
+    max-width: 80%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s ease, transform 1s ease;
+    z-index: 20;
+}
+
+.message h1 {
+    font-size: 36px;
+    margin-bottom: 15px;
+    color: #f2d600;
+}
+
+.message p {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Night mode */
+body.night-mode {
+    background-color: #1a237e;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .eid-button {
+        font-size: 20px;
+        padding: 10px 20px;
+    }
+    
+    .message h1 {
+        font-size: 28px;
+    }
+    
+    .message p {
+        font-size: 16px;
+    }
+    
+    .sun {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .decoration {
+        width: 100px;
+    }
+}
+.btn:hover {
+            background-color: #e64a19;
+            transform: scale(1.05);
+        }
+        
+        .star {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0;
+            pointer-events: none;
+            animation: float 5s linear infinite;
+            opacity: 0;
+            z-index: 1;
+        }
+        
+        @keyframes float {
+            0% {
+                opacity: 1;
+                font-size: 0px;
+                transform: translateY(0) rotate(0deg);
+            }
+            10% {
+                font-size: 20px;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+                font-size: 0px;
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+        
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 600%;
+            pointer-events: none;
+        }
+</style>
+<body>
+    <div class="container">
+        <div class="sun" id="sun"></div>
+        <div class="stars-container" id="stars-container"></div>
+        <div class="decoration left-decoration" id="left-decoration"></div>
+        <div class="decoration right-decoration" id="right-decoration"></div>
+        
+        <div class="eid-button" style="font-size: 30px;" id="eid-button" onclick="playSound()">اضغط للتهنئه 🎉</div>
+        
+        <div class="message" id="message">
+            <h1>عيد مبارك</h1>
+            <p>كل عام وأنتم بخير</p>
+            <p>تقبل الله منا ومنكم صالح الأعمال</p>
+            <p>أسأل الله أن يجعل أيامكم كلها أعيادًا، وأن يملأ قلبكم بالسرور، وبيتكم بالخير،  </p>
+            <p style="text-align: end;  margin-top: 20px;padding-bottom: 5px;
+            padding-left: 3px;
+            padding-right: 3px;
+            border-radius: 8px; border: #f3f2e7 1px solid ; width: 95px; margin-right: 200px;">ᴏᴍᴀʀ ᴍᴇɴɪꜱʏ</p>
+        </div>
+    </div>
+    <audio id="eid-audio" >
+        <source src="https://ia601307.us.archive.org/6/items/index-online-audio-converter.com/index%20%28online-audio-converter.com%29.mp3" type="audio/mpeg">
+        
+      </audio>
+      
+<div class="stars-container" id="starsContainer"></div>
+    <script >
+        document.addEventListener('DOMContentLoaded', function() {
+    const eidButton = document.getElementById('eid-button');
+    const sun = document.getElementById('sun');
+    const starsContainer = document.getElementById('stars-container');
+    const leftDecoration = document.getElementById('left-decoration');
+    const rightDecoration = document.getElementById('right-decoration');
+    const message = document.getElementById('message');
+    const eidAudio = document.getElementById('eid-audio');
+    // Create stars
+    function createStars() {
+        for (let i = 0; i < 100; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Random size between 2px and 4px
+            const size = Math.random() * 2 + 2;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            
+            // Random position
+            star.style.left = `${Math.random() * 100}%`;
+            star.style.top = `${Math.random() * 100}%`;
+            
+            // Random animation delay
+            star.style.animationDelay = `${Math.random() * 2}s`;
+            
+            starsContainer.appendChild(star);
+        }
+    }
+    
+    createStars();
+    
+    // Handle click event
+    eidButton.addEventListener('click', function() {
+        // Move sun down
+        sun.style.top = '10%';
+        sun.style.boxShadow = '0 0 15px 5px rgba(242, 214, 0, 0.4)';
+        
+
+        // Change background to night
+        document.body.classList.add('night-mode');
+        
+        // Show stars
+        starsContainer.style.opacity = '1';
+        
+        // Show decorations
+        leftDecoration.style.opacity = '1';
+        rightDecoration.style.opacity = '1';
+        
+        // Show message
+        setTimeout(() => {
+            message.style.opacity = '1';
+            message.style.transform = 'translateY(0)';
+        }, 1000);
+        
+        // Hide button
+        this.style.opacity = '0';
+        setTimeout(() => {
+            this.style.display = 'none';
+        }, 500);
+    });
+});
+function playSound() {
+            document.getElementById("eid-audio").play();
+        }
+        let animationInterval;
+        const starsContainer = document.getElementById('starsContainer');
+        const btn = document.getElementById('celebrateBtn');
+        let isCelebrating = false;
+        
+        btn.addEventListener('click', function() {
+            if (isCelebrating) {
+                stopCelebration();
+                btn.textContent = 'ابدأ الاحتفال!';
+            } else {
+                startCelebration();
+                btn.textContent = 'إيقاف الاحتفال!';
+            }
+            isCelebrating = !isCelebrating;
+        });
+        
+        function startCelebration() {
+            // إنشاء النجوم بشكل مستمر
+            animationInterval = setInterval(createStars, 100);
+            
+            // تغيير لون الخلفية تدريجياً
+            document.body.style.backgroundColor = '#0a0a0a';
+        }
+        
+        function stopCelebration() {
+            clearInterval(animationInterval);
+            
+            // إعادة لون الخلفية الأصلي
+            document.body.style.backgroundColor = '#1a1a1a';
+        }
+        
+        function createStars() {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.innerHTML = '★';
+            
+            // ألوان عشوائية للنجوم
+            const colors = ['yello', 'yello', 'yello', 'yello', 'yello', 'yello', 'yello'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            star.style.color = randomColor;
+            
+            // حجم عشوائي
+            const size = 10 + Math.random() * 30;
+            
+            // وضع عشوائي على الشاشة
+            const startX = Math.random() * window.innerWidth;
+            star.style.left = startX + 'px';
+            star.style.bottom = '0px';
+            
+            // تأخير عشوائي للحركة
+            star.style.animationDelay = (Math.random() * 2) + 's';
+            
+            // مدة عشوائية للحركة
+            const duration = 3 + Math.random() * 3;
+            star.style.animationDuration = duration + 's';
+            
+            starsContainer.appendChild(star);
+            
+            // إزالة النجمة بعد انتهاء الحركة
+            setTimeout(() => {
+                star.remove();
+            }, duration * 1000);
+        }
+    </script>
+</body>
+</html>
